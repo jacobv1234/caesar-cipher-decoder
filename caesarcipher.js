@@ -6,15 +6,15 @@ const alphabet = 'abcdefghijklmnopqrstuvwxyz'
 function encodeMessage(message) {
     // generate key
     let key = Math.floor(Math.random() * 9999)
-    let output = key + ','
+    let output = key + ';'
 
     // go through each letter
     for (let i = 0; i < message.length; i++) {
         // get the letter
         let character = message[i]
 
-        // skip if space
-        if (character != ' ') {
+        // skip if not a letter
+        if (alphabet.includes(character)) {
             let charIndex = alphabet.indexOf(character)
 
             // apply adjustment
@@ -25,7 +25,7 @@ function encodeMessage(message) {
             // add to output
             output += newcharacter
         } else {
-            output += ' '
+            output += character
         }
     }
 
@@ -36,7 +36,7 @@ function encodeMessage(message) {
 //decoding algorithm
 function decodeMessage(input) {
     // break the input into key and message
-    let splitmessage = input.split(',')
+    let splitmessage = input.split(';')
     let key = splitmessage[0]
     let message = splitmessage[1]
     let output = '' + ''
@@ -46,8 +46,8 @@ function decodeMessage(input) {
         // get the letter
         let character = message[i]
 
-        // skip if space
-        if (character != 0) {
+        // skip if not a letter
+        if (alphabet.includes(character)) {
             let charIndex = alphabet.indexOf(character)
 
             // apply adjustment
@@ -58,7 +58,7 @@ function decodeMessage(input) {
             // add to output
             output += newcharacter
         } else {
-            output += ' '
+            output += character
         }
     }
 
@@ -77,10 +77,10 @@ let selection = prompt('>>> ')
 
 if (selection == 1) {
     // encode selected
-    let message = prompt('Enter a message to encode (lowercase letters and space only): ')
+    let message = prompt('Enter a message to encode: ').toLowerCase()
     encodeMessage(message)
 } else {
     // decode selected
-    let message = prompt('Enter a message to decode (example format "106,louyhg"): ')
+    let message = prompt('Enter a message to decode (example format "106;louyhg"): ').toLowerCase()
     decodeMessage(message)
 }
